@@ -1,0 +1,11 @@
+[project]
+name = "mcp-ws"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "duckduckgo-search>=8.1.1",
+    "httpx>=0.28.1",
+    "mcp[cli]>=1.27.0",
+]
