@@ -1,5 +1,5 @@
 from mcp.server.fastmcp import FastMCP
-from duckduckgo_search import DDGS
+from ddgs import get_results
 import logging
 
 # Initialize FastMCP server
@@ -14,9 +14,8 @@ def search_web(query: str, max_results: int = 5) -> str:
         max_results: Number of results to return (default 5).
     """
     try:
-        with DDGS() as ddgs:
-            results = list(ddgs.text(query, max_results=max_results))
-            if not results:
+        results = list(get_results(query, max_results=max_results))
+        if not results:
                 return "No results found."
             
             formatted_results = []
