@@ -1,5 +1,5 @@
 from mcp.server.fastmcp import FastMCP
-from ddgs import get_results
+from ddgs import DDGS
 import logging
 
 mcp = FastMCP("WebSearch")
@@ -13,15 +13,16 @@ def search_web(query: str, max_results: int = 5) -> str:
         max_results: Number of results to return (default 5).
     """
     try:
-        results = list(get_results(query, max_results=max_results))
-        if not results:
-            return "No results found."
+        with DDGS() as ddgs:
+            results = list(ddgs.text(query, max_results=max_results))
+            if not results:
+                return "No results found."
 
-        formatted_results = []
-        for r in results:
-            formatted_results.append(f"Title: {r['title']}\nURL: {r['href']}\nSnippet: {r['body']}\n---")
+            formatted_results = []
+            for r in results:
+                formatted_results.append(f"Title: {r['title']}\nURL: {r['href']}\nSnippet: {r['body']}\n---")
 
-        return "\n".join(formatted_results)
+            return "\n".join(formatted_results)
     except Exception as e:
         return f"Error during search: {str(e)}"
 
